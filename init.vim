@@ -22,37 +22,37 @@ set shortmess+=c
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
+    " Recently vim can merge signcolumn and number column into one
+    set signcolumn=number
 else
-  set signcolumn=yes
+    set signcolumn=yes
 endif
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
 if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
+    inoremap <silent><expr> <c-space> coc#refresh()
 else
-  inoremap <silent><expr> <c-@> coc#refresh()
+    inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -69,15 +69,14 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
+    if CocAction('hasProvider', 'hover')
+        call CocActionAsync('doHover')
+    else
+        call feedkeys('K', 'in')
+    endif
 endfunction
 
 " Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
@@ -87,11 +86,11 @@ xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    autocmd!
+    " Setup formatexpr specified filetype(s).
+    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    " Update signature help on jump placeholder.
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
 " Applying codeAction to the selected region.
@@ -120,12 +119,12 @@ omap ac <Plug>(coc-classobj-a)
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
 if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  noremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+    nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+    noremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+    inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+    inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+    vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+    vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
 " Use CTRL-S for selections ranges.
@@ -167,6 +166,19 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 call plug#begin()
 " theme
+" Collection of common configurations for the Nvim LSP client
+Plug 'neovim/nvim-lspconfig'
+
+" Extentions to built-in LSP, for example, providing type inlay hints
+Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+
+
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'NLKNguyen/papercolor-theme'
 
@@ -178,8 +190,8 @@ Plug 'jparise/vim-graphql'        " GraphQL syntax
 
 "prettier for formatting
 Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install --frozen-lockfile --production',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
+            \ 'do': 'yarn install --frozen-lockfile --production',
+            \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
 
 " completion of brackets and quotes
 Plug 'tmsvg/pear-tree'
@@ -211,17 +223,17 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Install java plugin
 Plug 'artur-shaik/vim-javacomplete2'
 
+Plug 'vim-autoformat/vim-autoformat'
+
+Plug 'tpope/vim-fugitive'
+
 " Initialize plugin system
 call plug#end()
 " set the colorscheme
-colorscheme PaperColor 
-
+colorscheme PaperColor
+set completeopt=menuone,noinsert,noselect
 "
 let mapleader = " "
-
-" In normal mode, map the file explorer non recursively vertically and on the
-" right of current buffer to <leader>f
-nnoremap <leader>f :Vex!<CR>
 
 
 " Map moving to the start and end of the current line to H and L
@@ -231,11 +243,11 @@ map L $
 " Allow opening command mode with ;
 noremap ; :
 
-" Sets scroll offset to 8 lines 
+" Sets scroll offset to 8 lines
 set scrolloff=8
 
-" Sets relative numbers on the left 
-set relativenumber
+" Sets relative numbers on the left
+set number
 
 " Sets the width that a tab appears at to 4 spaces
 set tabstop=4
@@ -254,13 +266,37 @@ set expandtab
 set smartindent
 
 " Maps <leader><CR> to source init.vim
-nnoremap <leader><CR> :w <bar> :so ~/.config/nvim/init.vim<CR> 
+nnoremap <leader><CR> :w <bar> :so ~/.config/nvim/init.vim<CR>
+
+"Maps <leader><fed> to open init.vim
+nnoremap <leader>fed :e ~/Documents/GitHub/config/init.vim<CR>
+
+"Open file explorer nerdtree
+nmap <leader>ft :NERDTreeToggle <CR>
+
+"Focus nerdtree
+nmap <leader>0 :NERDTreeFocus <CR>
+
+"Focus windows
+let i = 1
+while i <= 9
+    execute 'nnoremap <leader>' . i . ' :' . 'wincmd w<CR>'
+    let i = i + 1
+endwhile
+
+"Save file
+nmap <leader>fs :Autoformat <bar> :w <CR>
+
+"Open terminal
+nmap <leader>' :split term://zsh <CR>
 
 " Save mode
 nnoremap <leader>s :update<CR>
 
 " prettier
 nnoremap <leader>p :Prettier<CR>
+
+nnoremap <leader>t :!
 
 " set comments to italic
 highlight Comment cterm=italic
@@ -270,3 +306,140 @@ highlight htmlArg cterm=italic
 
 " highlight javascript keyword
 highlight Boost_keyword cterm=italic
+
+let g:NERDTreeWinPos = "right"
+
+let g:coc_global_extensions = ['coc-rust-analyzer']
+
+"pasting with super
+set clipboard+=unnamed
+set paste
+set go+=a
+
+"statusline
+hi StatusLine term=bold cterm=bold ctermfg=White ctermbg=235
+hi StatusHostname term=bold cterm=bold ctermfg=107 ctermbg=235 guifg=#799d6a
+hi StatusGitBranch term=bold cterm=bold ctermfg=215 ctermbg=235 guifg=#ffb964
+
+function! MyGitBranchStyle()
+    let branch = "main"
+    if branch == ''
+        let branchStyle = ''
+    else
+        let branchStyle = 'git:' . branch
+        end
+        return branchStyle
+    endfunction
+
+    function! WindowNumber()
+        let str=tabpagewinnr(tabpagenr())
+        return str
+    endfunction
+
+    set laststatus=2
+    set statusline=%#StatusGitBranch#%{FugitiveStatusline()}\ \%=%#StatusLine#%{strftime(\"%d/%m/%Y-%H:%M\")}\ %#StatusHostname#%{hostname()}
+
+
+    lua <<EOF
+
+    -- nvim_lsp object
+    local nvim_lsp = require'lspconfig'
+
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+    -- Enable rust_analyzer
+    nvim_lsp.rust_analyzer.setup({
+    capabilities=capabilities,
+    -- on_attach is a callback called when the language server attachs to the buffer
+    -- on_attach = on_attach,
+    settings = {
+        -- to enable rust-analyzer settings visit:
+        -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+        ["rust-analyzer"] = {
+            -- enable clippy diagnostics on save
+            checkOnSave = {
+                command = "clippy"
+                },
+            }
+        }
+    })
+
+-- Enable diagnostics
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false,
+    signs = true,
+    update_in_insert = true,
+    }
+)
+EOF
+
+
+" Code navigation shortcuts
+" as found in :help lsp
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+
+" Quick-fix
+nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+
+
+" have a fixed column for the diagnostics to appear in
+" this removes the jitter when warnings/errors flow in
+set signcolumn=yes
+
+" Set updatetime for CursorHold
+" 300ms of no cursor movement to trigger CursorHold
+set updatetime=300
+
+
+" Goto previous/next diagnostic warning/error
+nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
+nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
+
+" Enable type inlay hints
+autocmd InsertLeave,TabEnter,BufWritePost *.rs
+            \ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
+
+lua <<EOF
+
+local cmp = require'cmp'
+cmp.setup({
+snippet = {
+    expand = function(args)
+    vim.fn["vsnip#anonymous"](args.body)
+    end,
+    },
+mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    -- Add tab support
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+    behavior = cmp.ConfirmBehavior.Insert,
+    select = true,
+    })
+},
+
+  -- Installed sources
+  sources = {
+      { name = 'nvim_lsp' },
+      { name = 'vsnip' },
+      { name = 'path' },
+      { name = 'buffer' },
+      },
+  })
+EOF
