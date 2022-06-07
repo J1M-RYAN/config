@@ -1,4 +1,4 @@
-" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+"] Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 set encoding=utf-8
 
@@ -31,16 +31,18 @@ endif
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space()? "\<TAB>" :
+            \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 
 " Use <c-space> to trigger completion.
 if has('nvim')
@@ -53,6 +55,7 @@ endif
 " format on enter, <cr> could be remapped by other vim plugin
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
             \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -311,10 +314,6 @@ let g:NERDTreeWinPos = "right"
 
 let g:coc_global_extensions = ['coc-rust-analyzer']
 
-"pasting with super
-set clipboard+=unnamed
-set paste
-set go+=a
 
 "statusline
 hi StatusLine term=bold cterm=bold ctermfg=White ctermbg=235
@@ -411,9 +410,7 @@ autocmd InsertLeave,TabEnter,BufWritePost *.rs
 
 lua <<EOF
 
-local cmp = require'cmp'
-cmp.setup({
-snippet = {
+local cmp = require'cmp' cmp.setup({ snippet = {
     expand = function(args)
     vim.fn["vsnip#anonymous"](args.body)
     end,
@@ -423,6 +420,7 @@ mapping = {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     -- Add tab support
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+
     ['<Tab>'] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
